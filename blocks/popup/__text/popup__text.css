@@ -1,8 +1,8 @@
-.popup__profession {
+.popup__text {
   box-sizing: border-box;
   display: block;
   padding: 0;
-  margin-top: 30px;
+
   width: 100%;
   min-height: 27px;
   border: none;
@@ -14,3 +14,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+
+
+

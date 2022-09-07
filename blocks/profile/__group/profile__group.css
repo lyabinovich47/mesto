@@ -1,0 +1,6 @@
+.profile__group {
+  width: 100%;
+  min-height: fit-content;
+  display: flex;
+  align-items: baseline;
+}
