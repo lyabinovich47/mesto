@@ -5,8 +5,8 @@ const openPopupButton = document.querySelector('.profile__edit-button');
 const closePopupButton = document.querySelector('.popup__close-button');
 
 const formElement = document.querySelector('.popup__container');
-let nameInput = document.querySelector('.popup__text_type_name');
-let professionInput = document.querySelector('.popup__text_type_profession');
+const nameInput = document.querySelector('.popup__text_type_name');
+const professionInput = document.querySelector('.popup__text_type_profession');
 
 let newName = document.querySelector('.profile__name');
 let newProfession = document.querySelector('.profile__profession');
@@ -16,10 +16,10 @@ let newProfession = document.querySelector('.profile__profession');
 function togglePopup() {
 
   if (!popupElement.classList.contains('popup_opened')) {
-    nameInput.value = document.querySelector('.profile__name').textContent;
-    professionInput.value = document.querySelector('.profile__profession').textContent;
+    nameInput.value = newName.textContent;
+    professionInput.value = newProfession.textContent;
   }
-  
+
   popupElement.classList.toggle('popup_opened');
 }
 
@@ -40,5 +40,3 @@ openPopupButton.addEventListener('click', togglePopup);
 closePopupButton.addEventListener('click', togglePopup);
 
 formElement.addEventListener('submit', formSubmitHandler);
-
-
