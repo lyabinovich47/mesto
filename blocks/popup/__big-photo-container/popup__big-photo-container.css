@@ -1,5 +1,4 @@
 .popup__big-photo-container {
-  position: relative;
   box-sizing: border-box;
   position: fixed;
   top: 90px;
