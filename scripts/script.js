@@ -1,6 +1,6 @@
 
 const elementTemplate = document.querySelector('.element-template').content;
-const Elements = document.querySelector('.elements');
+const elementsList = document.querySelector('.elements');
 const templateBigPhoto = document.querySelector('.big-photo-template').content;
 const page = document.querySelector('.page');
 
@@ -43,7 +43,7 @@ function createCard(item) {
   titleCard.textContent = item.name;
 
   buttonDeleteCard.addEventListener('click', deleteCard);
-  buttonLikeCard.addEventListener('click', likeCard);
+  buttonLikeCard.addEventListener('click', toggleLikeCard);
   photoCard.addEventListener('click', handleBigPhoto);
 
   newCard = card;
@@ -58,11 +58,11 @@ function renderCard(item) {
 
   if (popup.classList.contains('popup_type_form')) {
 
-    Elements.prepend(newCard);
+    elementsList.prepend(newCard);
 
   } else {
 
-    Elements.append(newCard);
+    elementsList.append(newCard);
 
   }
 
@@ -82,9 +82,9 @@ function deleteCard(event) {
 
 }
 
-function likeCard(event) {
+function toggleLikeCard(event) {
 
-  event.target.classList.add('element__like-btn_active');
+  event.target.classList.toggle('element__like-btn_active');
 
 }
 
@@ -124,8 +124,10 @@ function handleSubmitNewCard(event) {
   event.preventDefault();
 
   const userNewCard = {
+
     name: '',
     link: '',
+
   };
 
   userNewCard.name = inputNameCard.value;
@@ -159,7 +161,7 @@ function handleButtonOpenEditProfile() {
 function handleButtonCloseEditProfile() {
 
   popup.classList.remove('popup_type_form');
-  formEditProfile.classList.remove('popup__container_opened');
+  formEditProfile.classList.remove('popup__container_opened');  
 
 }
 
