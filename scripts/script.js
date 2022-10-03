@@ -88,6 +88,35 @@ function toggleLikeCard(event) {
 
 }
 
+function openPopup(event) {
+  if (event.target.classList.contains('element__photo')) {
+    popup.classList.add('popup_type_big-photo');
+    containerBigPhoto.classList.add('popup__big-photo-container_opened');
+  } else if (event.target.classList.contains('profile__add-button')) {
+    popup.classList.add('popup_type_form');
+    formAddCard.classList.add('popup__container_opened');
+  } else if (event.target.classList.contains('profile__edit-button')) {
+    popup.classList.add('popup_type_form');
+    formEditProfile.classList.add('popup__container_opened');
+  }
+}
+
+function closePopup(event) {
+  if (event.target.classList.contains('popup__close-button')) {
+    popup.classList.remove('popup_type_big-photo');
+    containerBigPhoto.classList.remove('popup__big-photo-container_opened');
+    popup.classList.remove('popup_type_form');
+    formAddCard.classList.remove('popup__container_opened');
+    formEditProfile.classList.remove('popup__container_opened');
+  } else if (event.target.classList.contains('popup__container_type_elementAddForm')) {
+    popup.classList.remove('popup_type_form');
+    formAddCard.classList.remove('popup__container_opened');
+  } else if (event.target.classList.contains('popup__container_type_profileEditForm')) {
+    popup.classList.remove('popup_type_form');
+    formEditProfile.classList.remove('popup__container_opened');
+  }
+}
+
 function handleBigPhoto(event) {
 
   imageBigPhoto.src = event.target.src;
@@ -95,23 +124,19 @@ function handleBigPhoto(event) {
 
   page.appendChild(containerBigPhoto);
 
-  popup.classList.add('popup_type_big-photo');
-  containerBigPhoto.classList.add('popup__big-photo-container_opened');
+  openPopup(event);
 
 }
 
-function handleCloseBigPhoto() {
+function handleCloseBigPhoto(event) {
 
-  popup.classList.remove('popup_type_big-photo');
-  containerBigPhoto.classList.remove('popup__big-photo-container_opened');
+  closePopup(event);
 
 }
 
-function handleFormAddNewCard() {
+function handleFormAddNewCard(event) {
 
-  popup.classList.add('popup_type_form');
-  formAddCard.classList.add('popup__container_opened');
-
+  openPopup(event);
 
   buttonCloseFormAddNewCard.addEventListener('click', handleButtonCloseNewCardForm);
 
@@ -135,33 +160,30 @@ function handleSubmitNewCard(event) {
 
   renderCard(userNewCard);
 
-  handleButtonCloseNewCardForm();
+  handleButtonCloseNewCardForm(event);
 
 }
 
-function handleButtonCloseNewCardForm() {
+function handleButtonCloseNewCardForm(event) {
 
-  popup.classList.remove('popup_type_form');
-  formAddCard.classList.remove('popup__container_opened');
+  closePopup(event);
 
   formAddCard.reset();
 
 }
 
-function handleButtonOpenEditProfile() {
+function handleButtonOpenEditProfile(event) {
 
-  popup.classList.add('popup_type_form');
-  formEditProfile.classList.add('popup__container_opened');
+  openPopup(event);
 
   inputNameFormEditProfile.value = nameCurrentUser.textContent;
   inputProfessionFormEditProfile.value = professionCurrentUser.textContent;
 
 }
 
-function handleButtonCloseEditProfile() {
+function handleButtonCloseEditProfile(event) {
 
-  popup.classList.remove('popup_type_form');
-  formEditProfile.classList.remove('popup__container_opened');  
+  closePopup(event);
 
 }
 
@@ -172,7 +194,7 @@ function handleSubmitProfile(event) {
   nameCurrentUser.textContent = inputNameFormEditProfile.value;
   professionCurrentUser.textContent = inputProfessionFormEditProfile.value;
 
-  handleButtonCloseEditProfile();
+  handleButtonCloseEditProfile(event);
 
 }
 
