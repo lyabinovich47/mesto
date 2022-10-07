@@ -1,10 +1,12 @@
 
+
+
 const elementTemplate = document.querySelector('.element-template').content;
 const elementsList = document.querySelector('.elements');
 const templateBigPhoto = document.querySelector('.big-photo-template').content;
 const page = document.querySelector('.page');
-
 const popup = document.querySelector('.popup');
+
 const formAddCard = document.querySelector('.popup__container_type_elementAddForm');
 const buttonAddCard = document.querySelector('.profile__add-button');
 
@@ -102,16 +104,19 @@ function openPopup(event) {
 }
 
 function closePopup(event) {
-  if (event.target.classList.contains('popup__close-button')) {
+  if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup') || event.key === 'Escape') {
     popup.classList.remove('popup_type_big-photo');
     containerBigPhoto.classList.remove('popup__big-photo-container_opened');
+
     popup.classList.remove('popup_type_form');
     formAddCard.classList.remove('popup__container_opened');
-    formEditProfile.classList.remove('popup__container_opened');
+    formEditProfile.classList.remove('popup__container_opened'); // возможно где-то здесь нужно дописать вызов функции очистки красной строчки под инпутом
   } else if (event.target.classList.contains('popup__container_type_elementAddForm')) {
+
     popup.classList.remove('popup_type_form');
     formAddCard.classList.remove('popup__container_opened');
   } else if (event.target.classList.contains('popup__container_type_profileEditForm')) {
+
     popup.classList.remove('popup_type_form');
     formEditProfile.classList.remove('popup__container_opened');
   }
@@ -198,8 +203,20 @@ function handleSubmitProfile(event) {
 
 }
 
+function handlePopupCloseClick(event) {
+  closePopup(event);
+}
+
+function handlerPopupCloseEscape(event) {
+  if (event.key === 'Escape') {
+        closePopup(event);
+  }
+}
+
 buttonAddCard.addEventListener('click', handleFormAddNewCard);
 buttonEditProfile.addEventListener('click', handleButtonOpenEditProfile);
 buttonCloseEditProfile.addEventListener('click', handleButtonCloseEditProfile);
 formEditProfile.addEventListener('submit', handleSubmitProfile);
 buttonCloseBigPhoto.addEventListener('click', handleCloseBigPhoto);
+popup.addEventListener('click', handlePopupCloseClick);
+document.addEventListener('keydown', handlerPopupCloseEscape);
