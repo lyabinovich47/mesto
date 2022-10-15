@@ -7,9 +7,6 @@
   z-index: 3;
   margin: 0;
   max-width: 75vw;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.3s linear;
 }
 
 @media (max-width: 767px) {

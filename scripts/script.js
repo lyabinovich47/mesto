@@ -1,18 +1,19 @@
 
-
-
 const elementTemplate = document.querySelector('.element-template').content;
 const elementsList = document.querySelector('.elements');
-const templateBigPhoto = document.querySelector('.big-photo-template').content;
-const page = document.querySelector('.page');
-const popup = document.querySelector('.popup');
+
+const popupEditProfile = document.querySelector('.popup_type_edit-profile')
+const popupAddCard = document.querySelector('.popup_type_add-card');
+const popupBigPhoto = document.querySelector('.popup_type_big-photo');
 
 const formAddCard = document.querySelector('.popup__container_type_elementAddForm');
 const buttonAddCard = document.querySelector('.profile__add-button');
 
-const containerBigPhoto = templateBigPhoto.querySelector('.popup__big-photo-container').cloneNode(true);
-const imageBigPhoto = containerBigPhoto.querySelector('.popup__big-photo');
-const titleBigPhoto = containerBigPhoto.querySelector('.popup__big-photo-title');
+const buttonSubmiteAddCard = formAddCard.querySelector('.popup__submite-btn');
+
+const containerBigPhoto = document.querySelector('.popup__big-photo-container');
+const imageBigPhoto = document.querySelector('.popup__big-photo');
+const titleBigPhoto = document.querySelector('.popup__big-photo-title');
 
 const inputNameCard = formAddCard.querySelector('.popup__text_type_element-title');
 const inputUrlCard = formAddCard.querySelector('.popup__text_type_element-url');
@@ -30,9 +31,8 @@ const professionCurrentUser = document.querySelector('.profile__profession');
 const buttonCloseBigPhoto = containerBigPhoto.querySelector('.popup__close-button');
 const buttonCloseFormAddNewCard = formAddCard.querySelector('.popup__close-button');
 
-let newCard;
 
-function createCard(item) {
+function createCard (item) {
 
   const card = elementTemplate.querySelector('.element').cloneNode(true);
   const photoCard = card.querySelector('.element__photo');
@@ -48,34 +48,23 @@ function createCard(item) {
   buttonLikeCard.addEventListener('click', toggleLikeCard);
   photoCard.addEventListener('click', handleBigPhoto);
 
-  newCard = card;
-
-  return newCard;
+  return card;
 
 }
 
 function renderCard(item) {
 
-  createCard(item);
-
-  if (popup.classList.contains('popup_type_form')) {
-
-    elementsList.prepend(newCard);
-
-  } else {
-
-    elementsList.append(newCard);
-
-  }
+  elementsList.prepend(createCard(item));
 
 }
 
-function renderCards() {
+function renderCards(cards) {
 
-  initialCards.forEach(renderCard);
+  cards.reverse().forEach(renderCard);
+
 }
 
-renderCards();
+renderCards(initialCards);
 
 function deleteCard(event) {
 
@@ -90,133 +79,97 @@ function toggleLikeCard(event) {
 
 }
 
-function openPopup(event) {
-  if (event.target.classList.contains('element__photo')) {
-    popup.classList.add('popup_type_big-photo');
-    containerBigPhoto.classList.add('popup__big-photo-container_opened');
-  } else if (event.target.classList.contains('profile__add-button')) {
-    popup.classList.add('popup_type_form');
-    formAddCard.classList.add('popup__container_opened');
-  } else if (event.target.classList.contains('profile__edit-button')) {
-    popup.classList.add('popup_type_form');
-    formEditProfile.classList.add('popup__container_opened');
-  }
+
+function openPopup(popup) {
+
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', handleCloseByEscape);
+
 }
 
-function closePopup(event) {
-  if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup') || event.key === 'Escape') {
-    popup.classList.remove('popup_type_big-photo');
-    containerBigPhoto.classList.remove('popup__big-photo-container_opened');
+function closePopup(popup) {
 
-    popup.classList.remove('popup_type_form');
-    formAddCard.classList.remove('popup__container_opened');
-    formEditProfile.classList.remove('popup__container_opened'); // возможно где-то здесь нужно дописать вызов функции очистки красной строчки под инпутом
-  } else if (event.target.classList.contains('popup__container_type_elementAddForm')) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleCloseByEscape);
 
-    popup.classList.remove('popup_type_form');
-    formAddCard.classList.remove('popup__container_opened');
-  } else if (event.target.classList.contains('popup__container_type_profileEditForm')) {
+}
 
-    popup.classList.remove('popup_type_form');
-    formEditProfile.classList.remove('popup__container_opened');
+function handleCloseByEscape(event) {
+
+  if (event.key === 'Escape') {
+
+    const openedPopup = document.querySelector('.popup_opened');
+
+    closePopup(openedPopup);
+
   }
 }
 
 function handleBigPhoto(event) {
 
   imageBigPhoto.src = event.target.src;
+  imageBigPhoto.alt = event.target.alt;
   titleBigPhoto.textContent = event.target.alt;
 
-  page.appendChild(containerBigPhoto);
-
-  openPopup(event);
+  openPopup(popupBigPhoto);
 
 }
 
-function handleCloseBigPhoto(event) {
+buttonAddCard.addEventListener('click', () => {
+  openPopup(popupAddCard);
+});
 
-  closePopup(event);
+buttonCloseFormAddNewCard.addEventListener('click', () => {
+  closePopup(popupAddCard);
+  formAddCard.reset();
+});
 
-}
-
-function handleFormAddNewCard(event) {
-
-  openPopup(event);
-
-  buttonCloseFormAddNewCard.addEventListener('click', handleButtonCloseNewCardForm);
-
-  formAddCard.addEventListener('submit', handleSubmitNewCard);
-
-}
-
-function handleSubmitNewCard(event) {
+formAddCard.addEventListener('submit', (event) => {
 
   event.preventDefault();
 
-  const userNewCard = {
+  renderCard({
+    name: inputNameCard.value,
+    link: inputUrlCard.value,
+  });
 
-    name: '',
-    link: '',
-
-  };
-
-  userNewCard.name = inputNameCard.value;
-  userNewCard.link = inputUrlCard.value;
-
-  renderCard(userNewCard);
-
-  handleButtonCloseNewCardForm(event);
-
-}
-
-function handleButtonCloseNewCardForm(event) {
-
-  closePopup(event);
-
+  closePopup(popupAddCard);
   formAddCard.reset();
 
-}
+  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // ! эти 2 строчки деактивируют кнопку Сохранить при повторном открытии попапа добавления карточки
+  buttonSubmiteAddCard.setAttribute('disabled', true);              // ! и это небольшое задвоение кода из функции toggleButtonState()
+                                                                    // ! нужно будет изменить после прохождения темы "Модули в JS"
+});
 
-function handleButtonOpenEditProfile(event) {
-
-  openPopup(event);
-
+buttonEditProfile.addEventListener('click', () => {
+  openPopup(popupEditProfile);
   inputNameFormEditProfile.value = nameCurrentUser.textContent;
   inputProfessionFormEditProfile.value = professionCurrentUser.textContent;
+});
 
-}
+buttonCloseEditProfile.addEventListener('click', () => {
+  closePopup(popupEditProfile);
+});
 
-function handleButtonCloseEditProfile(event) {
-
-  closePopup(event);
-
-}
-
-function handleSubmitProfile(event) {
-
+formEditProfile.addEventListener('submit', (event) => {
   event.preventDefault();
-
   nameCurrentUser.textContent = inputNameFormEditProfile.value;
   professionCurrentUser.textContent = inputProfessionFormEditProfile.value;
+  closePopup(popupEditProfile);
 
-  handleButtonCloseEditProfile(event);
+});
 
-}
 
-function handlePopupCloseClick(event) {
-  closePopup(event);
-}
+document.querySelectorAll('.popup').forEach( (popup) => {
 
-function handlerPopupCloseEscape(event) {
-  if (event.key === 'Escape') {
-        closePopup(event);
-  }
-}
+  popup.addEventListener('mousedown', (event) => {
 
-buttonAddCard.addEventListener('click', handleFormAddNewCard);
-buttonEditProfile.addEventListener('click', handleButtonOpenEditProfile);
-buttonCloseEditProfile.addEventListener('click', handleButtonCloseEditProfile);
-formEditProfile.addEventListener('submit', handleSubmitProfile);
-buttonCloseBigPhoto.addEventListener('click', handleCloseBigPhoto);
-popup.addEventListener('click', handlePopupCloseClick);
-document.addEventListener('keydown', handlerPopupCloseEscape);
+    if (event.target.classList.contains("popup") || event.target.classList.contains('popup__close-button')) {
+      closePopup(popup);
+    };
+  });
+});
+
+buttonCloseBigPhoto.addEventListener('click', () => {
+  closePopup(popupBigPhoto);
+});
