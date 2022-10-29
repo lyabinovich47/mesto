@@ -136,10 +136,11 @@ formAddCard.addEventListener('submit', (event) => {
   closePopup(popupAddCard);
   formAddCard.reset();
 
-  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // ! эти 2 строчки деактивируют кнопку Сохранить при повторном открытии попапа добавления карточки
-  buttonSubmiteAddCard.setAttribute('disabled', true);              // ! и это небольшое задвоение кода из функции toggleButtonState()
-                                                                    // ! нужно будет изменить после прохождения темы "Модули в JS"
-});
+  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // ! эти 2 строчки деактивируют кнопку Сохранить при
+  buttonSubmiteAddCard.setAttribute('disabled', true);              // ! повторном открытии попапа добавления карточки
+                                                                    // ! и это небольшое задвоение кода из функции toggleButtonState()
+});                                                                 // ! нужно будет изменить после прохождения темы "Модули в JS"
+
 
 buttonEditProfile.addEventListener('click', () => {
   openPopup(popupEditProfile);
