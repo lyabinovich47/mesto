@@ -32,7 +32,7 @@ const buttonCloseBigPhoto = containerBigPhoto.querySelector('.popup__close-butto
 const buttonCloseFormAddNewCard = formAddCard.querySelector('.popup__close-button');
 
 
-function createCard (item) {
+function createCard(item) {
 
   const card = elementTemplate.querySelector('.element').cloneNode(true);
   const photoCard = card.querySelector('.element__photo');
@@ -138,7 +138,7 @@ formAddCard.addEventListener('submit', (event) => {
 
   buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // ! эти 2 строчки деактивируют кнопку Сохранить при
   buttonSubmiteAddCard.setAttribute('disabled', true);              // ! повторном открытии попапа добавления карточки
-                                                                    // ! и это небольшое задвоение кода из функции toggleButtonState()
+  // ! и это небольшое задвоение кода из функции toggleButtonState()
 });                                                                 // ! нужно будет изменить после прохождения темы "Модули в JS"
 
 
@@ -161,7 +161,7 @@ formEditProfile.addEventListener('submit', (event) => {
 });
 
 
-document.querySelectorAll('.popup').forEach( (popup) => {
+document.querySelectorAll('.popup').forEach((popup) => {
 
   popup.addEventListener('mousedown', (event) => {
 
