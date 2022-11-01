@@ -1,10 +1,12 @@
+import { initialCards } from './cards.js';
+import { Card } from './card.js';
 
-const elementTemplate = document.querySelector('.element-template').content;
+
 const elementsList = document.querySelector('.elements');
 
-const popupEditProfile = document.querySelector('.popup_type_edit-profile')
+const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupAddCard = document.querySelector('.popup_type_add-card');
-const popupBigPhoto = document.querySelector('.popup_type_big-photo');
+export const popupBigPhoto = document.querySelector('.popup_type_big-photo');
 
 const formAddCard = document.querySelector('.popup__container_type_elementAddForm');
 const buttonAddCard = document.querySelector('.profile__add-button');
@@ -12,8 +14,6 @@ const buttonAddCard = document.querySelector('.profile__add-button');
 const buttonSubmiteAddCard = formAddCard.querySelector('.popup__submite-btn');
 
 const containerBigPhoto = document.querySelector('.popup__big-photo-container');
-const imageBigPhoto = document.querySelector('.popup__big-photo');
-const titleBigPhoto = document.querySelector('.popup__big-photo-title');
 
 const inputNameCard = formAddCard.querySelector('.popup__text_type_element-title');
 const inputUrlCard = formAddCard.querySelector('.popup__text_type_element-url');
@@ -31,56 +31,13 @@ const professionCurrentUser = document.querySelector('.profile__profession');
 const buttonCloseBigPhoto = containerBigPhoto.querySelector('.popup__close-button');
 const buttonCloseFormAddNewCard = formAddCard.querySelector('.popup__close-button');
 
+initialCards.forEach((item) => {
+  const card = new Card(item, '.element-template');
+  const cardElement = card.generateCard();
+  elementsList.append(cardElement);
+});
 
-function createCard(item) {
-
-  const card = elementTemplate.querySelector('.element').cloneNode(true);
-  const photoCard = card.querySelector('.element__photo');
-  const titleCard = card.querySelector('.element__title');
-  const buttonDeleteCard = card.querySelector('.element__delete-btn');
-  const buttonLikeCard = card.querySelector('.element__like-btn');
-
-  photoCard.src = item.link;
-  photoCard.alt = item.name;
-  titleCard.textContent = item.name;
-
-  buttonDeleteCard.addEventListener('click', deleteCard);
-  buttonLikeCard.addEventListener('click', toggleLikeCard);
-  photoCard.addEventListener('click', handleBigPhoto);
-
-  return card;
-
-}
-
-function renderCard(item) {
-
-  elementsList.prepend(createCard(item));
-
-}
-
-function renderCards(cards) {
-
-  cards.reverse().forEach(renderCard);
-
-}
-
-renderCards(initialCards);
-
-function deleteCard(event) {
-
-  const currentElement = event.target.closest('.element');
-  currentElement.remove();
-
-}
-
-function toggleLikeCard(event) {
-
-  event.target.classList.toggle('element__like-btn_active');
-
-}
-
-
-function openPopup(popup) {
+export function openPopup(popup) {
 
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleCloseByEscape);
@@ -105,16 +62,6 @@ function handleCloseByEscape(event) {
   }
 }
 
-function handleBigPhoto(event) {
-
-  imageBigPhoto.src = event.target.src;
-  imageBigPhoto.alt = event.target.alt;
-  titleBigPhoto.textContent = event.target.alt;
-
-  openPopup(popupBigPhoto);
-
-}
-
 buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
@@ -128,18 +75,22 @@ formAddCard.addEventListener('submit', (event) => {
 
   event.preventDefault();
 
-  renderCard({
-    name: inputNameCard.value,
-    link: inputUrlCard.value,
-  });
+  const card = new Card(
+    {
+      name: inputNameCard.value,
+      link: inputUrlCard.value,
+    }, '.element-template');
+
+  const cardElement = card.generateCard();
+  elementsList.prepend(cardElement);
 
   closePopup(popupAddCard);
   formAddCard.reset();
 
-  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // ! эти 2 строчки деактивируют кнопку Сохранить при
-  buttonSubmiteAddCard.setAttribute('disabled', true);              // ! повторном открытии попапа добавления карточки
-  // ! и это небольшое задвоение кода из функции toggleButtonState()
-});                                                                 // ! нужно будет изменить после прохождения темы "Модули в JS"
+  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // эти 2 строчки деактивируют кнопку "Сохранить" при повторном открытии попапа добавления карточки
+  buttonSubmiteAddCard.setAttribute('disabled', true);              // это небольшое задвоение кода из функции toggleButtonState нужно будет изменить после прохождения темы "Модули в JS"
+
+});
 
 
 buttonEditProfile.addEventListener('click', () => {
