@@ -1,5 +1,6 @@
 import { initialCards } from './cards.js';
-import { Card } from './card.js';
+import { Card } from './Card.js';
+import { FormValidator, settings } from './FormValidator.js';
 
 
 const elementsList = document.querySelector('.elements');
@@ -31,10 +32,20 @@ const professionCurrentUser = document.querySelector('.profile__profession');
 const buttonCloseBigPhoto = containerBigPhoto.querySelector('.popup__close-button');
 const buttonCloseFormAddNewCard = formAddCard.querySelector('.popup__close-button');
 
-initialCards.forEach((item) => {
+
+
+function createCard(item) {
+
   const card = new Card(item, '.element-template');
   const cardElement = card.generateCard();
-  elementsList.append(cardElement);
+  return cardElement;
+
+}
+
+initialCards.forEach((item) => {
+
+  elementsList.append(createCard(item));
+
 });
 
 export function openPopup(popup) {
@@ -75,14 +86,10 @@ formAddCard.addEventListener('submit', (event) => {
 
   event.preventDefault();
 
-  const card = new Card(
-    {
-      name: inputNameCard.value,
-      link: inputUrlCard.value,
-    }, '.element-template');
-
-  const cardElement = card.generateCard();
-  elementsList.prepend(cardElement);
+  elementsList.prepend(createCard({
+    name: inputNameCard.value,
+    link: inputUrlCard.value,
+  }));
 
   closePopup(popupAddCard);
   formAddCard.reset();
@@ -125,3 +132,9 @@ document.querySelectorAll('.popup').forEach((popup) => {
 buttonCloseBigPhoto.addEventListener('click', () => {
   closePopup(popupBigPhoto);
 });
+
+const validatorEditProfile = new FormValidator(settings, formEditProfile);
+validatorEditProfile.enableValidation();
+
+const validatorAddCard = new FormValidator(settings, formAddCard);
+validatorAddCard.enableValidation();
