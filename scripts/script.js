@@ -9,7 +9,7 @@ const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const popupAddCard = document.querySelector('.popup_type_add-card');
 export const popupBigPhoto = document.querySelector('.popup_type_big-photo');
 
-const formAddCard = document.querySelector('.popup__container_type_elementAddForm');
+const formAddCard = document.forms['formAddCard'];
 const buttonAddCard = document.querySelector('.profile__add-button');
 
 const buttonSubmiteAddCard = formAddCard.querySelector('.popup__submite-btn');
@@ -21,7 +21,7 @@ const inputUrlCard = formAddCard.querySelector('.popup__text_type_element-url');
 
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonCloseEditProfile = document.querySelector('.popup__close-button');
-const formEditProfile = document.querySelector('.popup__container_type_profileEditForm');
+const formEditProfile = document.forms['profileEditForm'];
 
 const inputNameFormEditProfile = document.querySelector('.popup__text_type_name');
 const inputProfessionFormEditProfile = document.querySelector('.popup__text_type_profession');
@@ -77,11 +77,6 @@ buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
 
-buttonCloseFormAddNewCard.addEventListener('click', () => {
-  closePopup(popupAddCard);
-  formAddCard.reset();
-});
-
 formAddCard.addEventListener('submit', (event) => {
 
   event.preventDefault();
@@ -94,8 +89,7 @@ formAddCard.addEventListener('submit', (event) => {
   closePopup(popupAddCard);
   formAddCard.reset();
 
-  buttonSubmiteAddCard.classList.add('popup__submit-btn_inactive'); // эти 2 строчки деактивируют кнопку "Сохранить" при повторном открытии попапа добавления карточки
-  buttonSubmiteAddCard.setAttribute('disabled', true);              // это небольшое задвоение кода из функции toggleButtonState нужно будет изменить после прохождения темы "Модули в JS"
+  validatorAddCard.resetValidation();
 
 });
 
@@ -104,10 +98,6 @@ buttonEditProfile.addEventListener('click', () => {
   openPopup(popupEditProfile);
   inputNameFormEditProfile.value = nameCurrentUser.textContent;
   inputProfessionFormEditProfile.value = professionCurrentUser.textContent;
-});
-
-buttonCloseEditProfile.addEventListener('click', () => {
-  closePopup(popupEditProfile);
 });
 
 formEditProfile.addEventListener('submit', (event) => {
@@ -127,10 +117,6 @@ document.querySelectorAll('.popup').forEach((popup) => {
       closePopup(popup);
     };
   });
-});
-
-buttonCloseBigPhoto.addEventListener('click', () => {
-  closePopup(popupBigPhoto);
 });
 
 const validatorEditProfile = new FormValidator(settings, formEditProfile);
