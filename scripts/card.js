@@ -6,6 +6,7 @@ const titleBigPhoto = document.querySelector('.popup__big-photo-title');
 
 export class Card {
   constructor(item, selector) {
+
     this._name = item.name;
     this._link = item.link;
     this._selector = selector;
@@ -69,4 +70,5 @@ export class Card {
 
     openPopup(popupBigPhoto);
   }
+
 }
