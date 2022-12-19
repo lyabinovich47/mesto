@@ -1,15 +1,11 @@
 
-import { openPopup, popupBigPhoto } from './script.js';
-
-const imageBigPhoto = document.querySelector('.popup__big-photo');
-const titleBigPhoto = document.querySelector('.popup__big-photo-title');
-
 export class Card {
-  constructor(item, selector) {
+  constructor(item, selector, handleCardClick) {
 
     this._name = item.name;
     this._link = item.link;
     this._selector = selector;
+    this._handleCardClick = handleCardClick;
 
   }
 
@@ -40,17 +36,12 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._cardDeleteBtn.addEventListener('click', () => {
-      this._deleteCard();
-    });
 
-    this._cardLikeBtn.addEventListener('click', () => {
-      this._toggleLikeCard();
-    });
+    this._cardDeleteBtn.addEventListener('click', () => this._deleteCard());
 
-    this._cardImage.addEventListener('click', () => {
-      this._handleBigPhoto();
-    });
+    this._cardLikeBtn.addEventListener('click', () => this._toggleLikeCard());
+
+    this._cardImage.addEventListener('click', () => this._handleCardClick());
 
   }
 
@@ -60,15 +51,6 @@ export class Card {
 
   _toggleLikeCard() {
     this._cardLikeBtn.classList.toggle('element__like-btn_active');
-  }
-
-  _handleBigPhoto() {
-
-    imageBigPhoto.src = this._link;
-    imageBigPhoto.alt = this._name;
-    titleBigPhoto.textContent = this._name;
-
-    openPopup(popupBigPhoto);
   }
 
 }
