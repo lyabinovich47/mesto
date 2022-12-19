@@ -1,25 +1,14 @@
-import { initialCards } from './cards.js';
-import { Card } from './Card.js';
-import { Section } from './Section.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
-import { FormValidator, settings } from './FormValidator.js';
+import {
+  initialCards, cardListSelector, popupEditProfile, popupAddCard, formAddCard, buttonAddCard, buttonEditProfile,
+  formEditProfile, inputNameFormEditProfile, inputProfessionFormEditProfile, settings
+} from '../utils/constants.js';
 
-
-const cardListSelector = '.elements';
-
-const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const popupAddCard = document.querySelector('.popup_type_add-card');
-
-const formAddCard = document.forms['formAddCard'];
-const buttonAddCard = document.querySelector('.profile__add-button');
-
-const buttonEditProfile = document.querySelector('.profile__edit-button');
-const formEditProfile = document.forms['profileEditForm'];
-
-const inputNameFormEditProfile = document.querySelector('.popup__text_type_name');
-const inputProfessionFormEditProfile = document.querySelector('.popup__text_type_profession');
+import { Card } from '../components/Card.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { FormValidator } from '../components/FormValidator.js';
 
 function createCard(item) {
 
