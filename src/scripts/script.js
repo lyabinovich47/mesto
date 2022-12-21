@@ -10,6 +10,8 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 
+import '../pages/index.css';
+
 function createCard(item) {
 
   const card = new Card(item, '.element-template', () => imageBigPhoto.open(item.name, item.link));
