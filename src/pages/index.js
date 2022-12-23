@@ -10,7 +10,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { FormValidator } from '../components/FormValidator.js';
 
-import '../pages/index.css';
+import './index.css';
 
 function createCard(item) {
 
@@ -29,7 +29,8 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 buttonAddCard.addEventListener('click', () => { // добавили слушатель на кнопку добавления карточки
-  addCardPopup.open(popupAddCard);
+  addCardPopup.open();
+  validatorAddCard.resetValidation();
 });
 
 const handleCardFormSubmit = (event, data) => { // обработчик сабмита формы добавления карточки
@@ -43,16 +44,17 @@ const handleCardFormSubmit = (event, data) => { // обработчик сабм
 
   cardsList.addItem(card);
   addCardPopup.close();
-  validatorAddCard.resetValidation();
 
 };
 
 buttonEditProfile.addEventListener('click', () => { // добавили слушатель на кнопку редактирования профиля
 
-  editProfilePopup.open(popupEditProfile);
+  editProfilePopup.open();
   const { name, profession } = userInfo.getUserInfo();
   inputNameFormEditProfile.value = name;
   inputProfessionFormEditProfile.value = profession;
+  validatorEditProfile.resetValidation();
+
 
 });
 
