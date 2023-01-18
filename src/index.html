@@ -17,7 +17,11 @@
     </header>
 
     <section class="profile">
-      <img src="<%=require('./images/avatar.jpg')%>" alt="аватарка Жак-Ив Кусто" class="profile__avatar">
+
+      <div class="profile__avatar-wrap">
+        <img src="<%=require('./images/avatar.jpg')%>" alt="аватарка Жак-Ив Кусто" class="profile__avatar">
+      </div>
+
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button type="button" class="profile__edit-button"></button>
@@ -87,6 +91,43 @@
 
     </div>
 
+    <div class="popup popup_type_delete-confirm">
+
+      <form class="popup__container popup__container_type_confirm" name="formDeleteConfirm" novalidate>
+
+        <button class="popup__close-button" type="button"></button>
+
+        <h2 class="popup__title popup__title_type_confirm">Вы уверены?</h2>
+
+        <button type="submit" class="popup__submite-btn">Да</button>
+
+      </form>
+
+    </div>
+
+    <!-- форма обновления аватара -->
+    <!-- popup_opened -->
+
+    <div class="popup popup_type_new-avatar">
+
+      <form class="popup__container popup__container_type_new-avatar" name="formNewAvatar" novalidate>
+
+        <button class="popup__close-button" type="button"></button>
+
+        <h2 class="popup__title popup__title_type_new-avatar">Обновить аватар</h2>
+
+        <label class="popup__form-field">
+          <input id="url-input" name="avatar" type="url" placeholder="Ссылка на картинку"
+            class="popup__text popup__text_type_element-url" required>
+          <span class="url-input-error popup__text-error"></span>
+        </label>
+
+        <button type="submit" class="popup__submite-btn">Сохранить</button>
+
+      </form>
+
+    </div>
+
     <div class="popup popup_type_big-photo">
       <figure class="popup__big-photo-container">
         <img src=" " alt="" class="popup__big-photo">
@@ -101,13 +142,17 @@
         <button class="element__delete-btn" type="button"></button>
         <div class="element__group">
           <h2 class="element__title"></h2>
-          <button class="element__like-btn" type="button"></button>
+          <div class="element__like-group">
+            <button class="element__like-btn" type="button"></button>
+            <span class="element__like-count"></span>
+          </div>
+
         </div>
       </li>
     </template>
   </div>
 
-  
+
 
 </body>
 

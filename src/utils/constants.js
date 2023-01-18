@@ -22,6 +22,10 @@ export const initialCards = [
   {
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  },
+  {
+    name: 'Жак-Ив Кусто',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/common/ava.jpg'
   }
 ];
 
@@ -34,6 +38,10 @@ export const buttonEditProfile = document.querySelector('.profile__edit-button')
 export const formEditProfile = document.forms['profileEditForm'];
 export const inputNameFormEditProfile = document.querySelector('.popup__text_type_name');
 export const inputProfessionFormEditProfile = document.querySelector('.popup__text_type_profession');
+export const buttonEditAvatar = document.querySelector('.profile__avatar-wrap');                      //! нашел "кнопку" обновления аватара
+export const formUpdateAvatar = document.forms['formNewAvatar'];                                      //! нашел форму обновления аватара
+
+
 
 export const settings = {
 

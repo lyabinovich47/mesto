@@ -1,6 +1,4 @@
 .element__like-btn {
-  margin-right: 20px;
-  margin-left: auto;
   width: 22px;
   height: 19px;
   cursor: pointer;
@@ -9,7 +7,6 @@
   border: none;
   padding: 0;
   background-color: unset;
-  margin-top: 4px;
 }
 
 .element__like-btn:hover {
