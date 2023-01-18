@@ -13,4 +13,4 @@
 * взаимодействия с сервером посредством Web API и метода fetch.
 
 ### Ссылка на GitHub Pages:
-* [https://lyabinovich47.github.io/mesto/index.html]
+* [https://github.com/lyabinovich47/mesto/blob/gh-pages/index.html]
