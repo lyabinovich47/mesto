@@ -4,6 +4,12 @@ export class Api {
 
     this._headers = headers;
     this._baseUrl = baseUrl;
+    this._ResJson = (res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    };
 
   }
 
@@ -12,15 +18,7 @@ export class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -29,15 +27,7 @@ export class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -51,15 +41,7 @@ export class Api {
         about: about
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -73,15 +55,7 @@ export class Api {
         link: link
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -91,15 +65,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -109,15 +75,7 @@ export class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
 
@@ -127,19 +85,9 @@ export class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
-
-
 
   updateAvatar(newAvatar) {
 
@@ -150,18 +98,8 @@ export class Api {
         avatar: newAvatar
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._ResJson);
 
   }
-
-
 
 }

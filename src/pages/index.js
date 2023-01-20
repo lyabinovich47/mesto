@@ -24,28 +24,6 @@ const api = new Api({
   }
 });
 
-// api.getProfile()
-//   .then((data) => {
-//     userInfo.setUserInfo(data.name, data.about, data.avatar);
-//     userId = data._id;
-//   });
-
-// api.getInitialCards()
-//   .then((cards) => {
-//     cards.forEach(data => {
-//       const card = createCard({
-//         name: data.name,
-//         link: data.link,
-//         likes: data.likes,
-//         id: data._id,
-//         userId: userId,
-//         ownerId: data.owner._id
-//       });
-
-//       cardsList.addItem(card);
-//     });
-
-//   });
 
 Promise.all([api.getProfile(), api.getInitialCards()])
   .then(([data, cards]) => {
@@ -53,7 +31,7 @@ Promise.all([api.getProfile(), api.getInitialCards()])
     userInfo.setUserInfo(data.name, data.about, data.avatar);
     userId = data._id;
 
-    cards.forEach(data => {
+    cards.reverse().forEach(data => {   //! добавил метод реверс чтобы своя карточка оказывалась сверху
       const card = createCard({
         name: data.name,
         link: data.link,
@@ -66,6 +44,9 @@ Promise.all([api.getProfile(), api.getInitialCards()])
       cardsList.addItem(card);
     });
 
+  })
+  .catch((err) => {
+    console.log(err);
   });
 
 function createCard(item) {
@@ -83,6 +64,9 @@ function createCard(item) {
           .then(res => {
             card.removeCard();
             confirmPopup.close();
+          })
+          .catch((err) => {
+            console.log(err);
           });
       });
     },
@@ -91,11 +75,17 @@ function createCard(item) {
         api.deleteLike(id)
           .then(res => {
             card.setLikes(res.likes);
+          })
+          .catch((err) => {
+            console.log(err);
           });
       } else {
         api.addLike(id)
           .then(res => {
             card.setLikes(res.likes);
+          })
+          .catch((err) => {
+            console.log(err);
           });
       }
     }
@@ -141,6 +131,9 @@ const handleCardFormSubmit = (event, data) => { // обработчик сабм
       addCardPopup.close();
 
     })
+    .catch((err) => {
+      console.log(err);
+    })
     .finally(() => {
       addCardPopup.renderSubmitBtnText('Создать');
     });
@@ -159,6 +152,7 @@ buttonEditProfile.addEventListener('click', () => { // добавили слуш
 });
 
 buttonEditAvatar.addEventListener('click', () => { //! добавили слушатель на обертку аватарки
+  validatorUpdateAvatar.resetValidation();
   avatarPopup.open();
 });
 
@@ -174,7 +168,9 @@ const handleEditProfileFormSubmit = (event, data) => {   // обработчик
     .then(data => {
       userInfo.setUserInfo(data.name, data.about, data.avatar); //! добавил аватар
       editProfilePopup.close();
-
+    })
+    .catch((err) => {
+      console.log(err);
     })
     .finally(() => {
       editProfilePopup.renderSubmitBtnText('Сохранить');
@@ -216,6 +212,9 @@ const handleNewAvatarFormSubmit = (event) => {                 //! обрабо�
       userInfo.setUserInfo(res.name, res.about, res.avatar);
       avatarPopup.close();
     })
+    .catch((err) => {
+      console.log(err);
+    })
     .finally(() => {
       avatarPopup.renderSubmitBtnText('Сохранить');
     });
@@ -232,3 +231,6 @@ validatorEditProfile.enableValidation();
 
 const validatorAddCard = new FormValidator(settings, formAddCard);
 validatorAddCard.enableValidation();
+
+const validatorUpdateAvatar = new FormValidator(settings, formUpdateAvatar);
+validatorUpdateAvatar.enableValidation();
